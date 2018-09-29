@@ -1,9 +1,16 @@
 package com.hibernateLearn.Hibernate;
 
+import org.hibernate.annotations.*;
 import javax.persistence.Entity;
+import javax.persistence.Cacheable;
+//import javax.persistence.Cache;
 import javax.persistence.Id;
 
+//import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity
+@Cacheable
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Taylor {
 	@Id
 	private int id;
