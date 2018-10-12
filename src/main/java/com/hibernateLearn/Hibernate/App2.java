@@ -35,14 +35,23 @@ public class App2 {
 	    int m=40;
 	    Students st=(Students)s.createQuery("from Students where id=9").uniqueResult();
 	    System.out.println(st);
+	    st.setMarks(100);
+	    
+	    //Move the Object in Detached State
+
+		s.evict(st);
 	    
 	    Object[] st2=(Object[])s.createQuery("Select name,marks from Students where id=9").uniqueResult();
 	    System.out.println(st2[0]+"  :  "+st2[1]);
 	    
-	    List slist=s.createQuery("from Students where marks> :b")
+
+	    
+	    List<Students> slist=s.createQuery("from Students where marks> :b")
 	    		.setParameter("b",m).list();
-		for(Object l:slist){
-			System.out.println(l);
+		
+	    for(Students l:slist){
+			l.setName("Rahul");
+	    	System.out.println(l);
 		}
 		
 		List<Integer> mids=new ArrayList<Integer>();
@@ -59,10 +68,13 @@ public class App2 {
 			System.out.println(o[0]+"  :  "+o[1]);
 		}
 		
+		
+		
 		Long l =(Long)s.createQuery("Select sum(marks) from Students where marks> :b")
 				.setParameter("b",40).uniqueResult();
 		System.out.println(l);
-	    tx.commit();
+		
+		
+		tx.commit();
 	}
-
 }
